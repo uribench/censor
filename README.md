@@ -16,7 +16,9 @@ The `BLACKLIST` parameter of `censor.sh` script can be provided as a plain text 
 
 ## Maintaining the Blacklist File
 
-Changes to the blacklist file are done on its plain text version. Following are the two commands to encrypt/decrypt when needed using `blacklist.txt` as an example:
+Changes to the blacklist file are done on its plain text version. The `censor.sh` script is making use of the `grep` command, therefore, each blacklisted word has to be placed in a separate line (i.e., `grep` takes the whole line for pattern match). 
+
+Following are the two commands to encrypt/decrypt the blacklist file when needed. These commands are using `blacklist.txt` as an example:
 
 ```bash
 # Encrypt:
