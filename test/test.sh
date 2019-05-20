@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-runtest() {
+testfile() {
   file=$1
   expected_exit_code=$2
 
@@ -15,16 +15,20 @@ runtest() {
   fi
 }
 
+testfolder() {
+  folder=$1
+  expected_exit_code=$2
+
+  for file in $folder/*; do
+    testfile $file $expected_exit_code
+  done
+}
+
 main() {
   failed=0
 
-  for file in fixtures/pass/*; do
-    runtest $file 0
-  done
-
-  for file in fixtures/fail/*; do
-    runtest $file 9
-  done
+  testfolder fixtures/pass 0
+  testfolder fixtures/fail 9
 
   if [[ $failed == 0 ]]; then
     echo "ALL PASS"
