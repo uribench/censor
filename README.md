@@ -1,37 +1,30 @@
 # Search for Blacklisted Words
 
-## Blacklisting
+The `censor.sh` script searches for blacklisted words in target files. It uses an external file containing blacklisted words.
 
-The file with the blacklisted words is encrypted. Only the encrypted version of the blacklist file exists on the public repository. However, all the included automation scripts (i.e., locally and on CI machines) are using the plain text version of the blacklist file. Therefore, if the plain text version doesn't exist when the scripts are executed, they decrypt it from the provided encrypted file using:
-
-```bash
-$ gpg2 --batch --passphrase=$PASSWORD -d blacklist.txt.gpg > blacklist.txt
-```
-
-To update the blacklist file follow these steps:
-
-1. **Update:** Put all the blacklisted words in a file (e.g., `blacklist.txt`). Each word has to be placed in a separate line, as `grep` takes the whole line for pattern match.
-
-2. **Encrypt:** Assuming the blacklist file is `blacklist.txt` and the right encryption passphrase is in `PASSWORD` environment variable (e.g., via `.envrc` file), encrypt it using the following command:
-
-```bash
-$ gpg2 --batch --passphrase=$PASSWORD -c blacklist.txt
-```
-
-## Execution
-
-Run the `censor.sh` script as follows:
+## Usage
 
 ```bash
 $ ./censor.sh BLACKLIST [FILE]...
 
-# Example:
-$ ./censor.sh blacklist.txt ../Guides/ ../Topics/ ../config/
+# Examples: 
+$ ./censor.sh blacklist.txt .
+$ ./censor.sh blacklist.txt.gpg ./*.md
 ```
 
-Note:
+The `BLACKLIST` parameter of `censor.sh` script can be provided as a plain text file or as an encrypted file. When an encrypted blacklist file is used, it has to be created with `gpg2` using a symmetric cipher. The encryption/decryption passphrase is expected to be in `BLACKLIST_PASSWORD` environment variable.
 
-There is no need to include the `Handbook` folder as a target for the search, as it is generated automatically from the contents in the `config` folder and includes only `index.md` files with references to the contents in the `Guides` and `Topics` folders.
+## Maintaining the Blacklist File
+
+Changes to the blacklist file are done on its plain text version. Following are the two commands to encrypt/decrypt when needed using `blacklist.txt` as an example:
+
+```bash
+# Encrypt:
+$ gpg2 --batch --passphrase=$PASSWORD -c blacklist.txt
+
+# Decrypt: 
+$ gpg2 --batch --passphrase=$BLACKLIST_PASSWORD -d blacklist.txt.gpg > blacklist.txt
+```
 
 ## Testing
 
