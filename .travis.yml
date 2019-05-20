@@ -4,4 +4,5 @@ language: bash
 before_script:
 - sudo apt-get install gnupg2
 script:
-- ./test/test.sh
+- cd test
+- ./test.sh
