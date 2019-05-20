@@ -5,9 +5,16 @@ blacklist=$1
 shift
 folders="$@"
 
+if [[ $blacklist == *.gpg ]]; then
+  tempblacklist=/tmp/blacklist.txt
+  gpg2 --batch --passphrase=$BLACKLIST_PASSWORD -d $blacklist > $tempblacklist
+  blacklist=$tempblacklist
+  trap "rm -f $tempblacklist" EXIT
+fi
+
 if [[ -z $folders ]]; then
   echo "Usage: $0 BLACKLIST [FILE]..."
-  echo "Example: $0 blacklist.txt ../Guides/ ../Topics/ ../config/"
+  echo "Example: $0 blacklist.txt ."
   exit 1
 fi
 

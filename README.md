@@ -9,7 +9,7 @@ $ ./censor.sh BLACKLIST [FILE]...
 
 # Examples: 
 $ ./censor.sh blacklist.txt .
-$ ./censor.sh blacklist.txt.gpg ./*.md
+$ ./censor.sh blacklist.txt.gpg .
 ```
 
 The `BLACKLIST` parameter of `censor.sh` script can be provided as a plain text file or as an encrypted file. When an encrypted blacklist file is used, it has to be created with `gpg2` using a symmetric cipher. The encryption/decryption passphrase is expected to be in `BLACKLIST_PASSWORD` environment variable.
@@ -20,7 +20,7 @@ Changes to the blacklist file are done on its plain text version. Following are 
 
 ```bash
 # Encrypt:
-$ gpg2 --batch --passphrase=$PASSWORD -c blacklist.txt
+$ gpg2 --batch --passphrase=$BLACKLIST_PASSWORD -c blacklist.txt
 
 # Decrypt: 
 $ gpg2 --batch --passphrase=$BLACKLIST_PASSWORD -d blacklist.txt.gpg > blacklist.txt

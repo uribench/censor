@@ -28,11 +28,6 @@ testfolder() {
 main() {
   passed=0
   failed=0
-  plainbalcklistfile=fixtures/test-blacklist.txt
-
-  if [[ ! -f $plainbalcklistfile ]]; then
-    gpg2 --batch --passphrase=$PASSWORD -d $plainbalcklistfile.gpg > $plainbalcklistfile
-  fi
 
   testfolder fixtures/pass 0
   testfolder fixtures/fail 9
