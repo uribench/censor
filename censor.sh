@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
-set -eu
+set -u  # '-e' option is not used since 'grep' returns 1 when nothing is found
 
 blacklist=$1
 shift
 folders="$@"
 
 if [[ -z $folders ]]; then
-  echo "Usage: $0 BLACKLIST [FOLDERS...]"
+  echo "Usage: $0 BLACKLIST [FILE]..."
+  echo "Example: $0 blacklist.txt ../Guides/ ../Topics/ ../config/"
   exit 1
 fi
 

@@ -9,10 +9,10 @@ Put all the blacklisted words in a file (e.g., `blacklist.tx`). Each word has to
 Run the `censor.sh` script as follows:
 
 ```bash
-$ ./censor.sh BLACKLIST [FOLDERS...]
+$ ./censor.sh BLACKLIST [FILE]...
 
 # Example:
-$ ./censor.sh blacklist.txt ../Guides ../Topics ../config
+$ ./censor.sh blacklist.txt ../Guides/ ../Topics/ ../config/
 ```
 
 Note:
@@ -21,4 +21,4 @@ There is no need to include the `Handbook` folder as a target for the search, as
 
 ## Testing
 
-The `censor.sh` script is tested using multiple 'pass/fail' fixtures placed in their respective folders under `./tests/`.
+The `censor.sh` script is tested using multiple 'pass/fail' fixtures placed in their respective folders under `./test/`.
