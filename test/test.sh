@@ -9,6 +9,7 @@ testfile() {
   
   if [[ $exitcode == $expected_exit_code ]]; then
     echo "PASS: $file"
+    passed=$(($passed + 1))
   else
     echo "FAIL: $file exited with $exitcode"
     failed=$(($failed + 1))
@@ -25,16 +26,18 @@ testfolder() {
 }
 
 main() {
+  passed=0
   failed=0
 
   testfolder fixtures/pass 0
   testfolder fixtures/fail 9
 
   if [[ $failed == 0 ]]; then
-    echo "ALL PASS"
+    echo "ALL PASS (total of $passed tests)"
     exit 0
   else
-    echo "FAILED: $failed errors"
+    total=$(($failed + $passed))
+    echo "FAILED: $failed errors (out of $total tests)"
     exit 1
   fi
 }
