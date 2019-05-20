@@ -28,6 +28,8 @@ $ gpg2 --batch --passphrase=$BLACKLIST_PASSWORD -c blacklist.txt
 $ gpg2 --batch --passphrase=$BLACKLIST_PASSWORD -d blacklist.txt.gpg > blacklist.txt
 ```
 
+Note: If you decide to use the encrypted blacklist and would like to avoid uploading its plain text version to a public repository, then remember to add its name to the `.gitignore` file. For example, the line `*blacklist.txt` ignores all plain text blacklists with filenames ending with "\*blacklist.txt", such as "test-balcklist.txt.
+
 ## Testing
 
 The `censor.sh` script is tested using multiple 'pass/fail' fixtures placed in their respective folders under `./test/`.
