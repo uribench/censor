@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/uribench/censor.svg?branch=master)](https://travis-ci.org/uribench/censor)
+[![Build Status](https://travis-ci.com/uribench/censor.svg?branch=master)](https://travis-ci.com/uribench/censor)
 
 # Search for Blacklisted Words
 
