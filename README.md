@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/uribench/censor.svg?branch=master)](https://travis-ci.org/uribench/censor)
+
 # Search for Blacklisted Words
 
 The `censor.sh` script searches for blacklisted words in target files. It uses an external file containing blacklisted words.
