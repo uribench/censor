@@ -3,8 +3,7 @@ set -u            # '-e' option is not used since 'grep' returns 1 when nothing 
 
 blacklist=$1
 shift
-folders="${@:0}"  # clone $@ to preserve its internal structure, instead of using a
-                  # simple assignment that yields a space delimited string
+folders="$@"
 
 if [[ $blacklist == *.gpg ]]; then
   tempblacklist=/tmp/blacklist.txt
@@ -19,14 +18,12 @@ if [[ -z $folders ]]; then
   exit 1
 fi
 
-for folder in $folders; do
-  grep -Rinw --color -f $blacklist "$folder"
+grep -Rinw --color -f $blacklist $folders
 
-  if [[ $? == 0 ]]; then
-    echo "FAIL: There are some blacklisted words in the repository"
-    exit 9
-  else
-    echo "PASS: There are no known blacklisted words in the repository"
-    exit 0
-  fi
-done
+if [[ $? == 0 ]]; then
+  echo "FAIL: There are some blacklisted words in the repository"
+  exit 9
+else
+  echo "PASS: There are no known blacklisted words in the repository"
+  exit 0
+fi
