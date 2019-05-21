@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -u  # '-e' option is not used since 'grep' returns 1 when nothing is found
+set -u            # '-e' option is not used since 'grep' returns 1 when nothing is found
 
 blacklist=$1
 shift
@@ -18,14 +18,12 @@ if [[ -z $folders ]]; then
   exit 1
 fi
 
-for folder in $folders; do
-  grep -Rinw --color -f $blacklist $folder
+grep -Rinw --color -f $blacklist $folders
 
-  if [[ $? == 0 ]]; then
-    echo "FAIL: There are some blacklisted words in the repository"
-    exit 9
-  else
-    echo "PASS: There are no known blacklisted words in the repository"
-    exit 0
-  fi
-done
+if [[ $? == 0 ]]; then
+  echo "FAIL: There are some blacklisted words in the repository"
+  exit 9
+else
+  echo "PASS: There are no known blacklisted words in the repository"
+  exit 0
+fi
