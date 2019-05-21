@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-set -u  # '-e' option is not used since 'grep' returns 1 when nothing is found
+set -u            # '-e' option is not used since 'grep' returns 1 when nothing is found
 
 blacklist=$1
 shift
-folders="$@"
+folders="${@:0}"  # clone $@ to preserve its internal structure, instead of using a
+                  # simple assignment that yields a space delimited string
 
 if [[ $blacklist == *.gpg ]]; then
   tempblacklist=/tmp/blacklist.txt
@@ -19,7 +20,7 @@ if [[ -z $folders ]]; then
 fi
 
 for folder in $folders; do
-  grep -Rinw --color -f $blacklist $folder
+  grep -Rinw --color -f $blacklist "$folder"
 
   if [[ $? == 0 ]]; then
     echo "FAIL: There are some blacklisted words in the repository"
