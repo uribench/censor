@@ -1,36 +1,13 @@
 #!/usr/bin/env bash
 
-testfile() {
-  file=$1
-  expected_exit_code=$2
-
-  ../censor.sh fixtures/test-blacklist.txt "$file" > /dev/null
-  exitcode=$?
-  
-  if [[ $exitcode == $expected_exit_code ]]; then
-    echo "PASS: $file"
-    passed=$(($passed + 1))
-  else
-    echo "FAIL: $file exited with $exitcode"
-    failed=$(($failed + 1))
-  fi
-}
-
-testfolder() {
-  folder=$1
-  expected_exit_code=$2
-
-  for file in $folder/*; do
-    testfile $file $expected_exit_code
-  done
-}
+source helpers/test_censor_exit_code_for_single_folder.sh
 
 main() {
   passed=0
   failed=0
 
-  testfolder fixtures/pass 0
-  testfolder fixtures/fail 9
+  test_censor_exit_code_for_single_folder fixtures/pass 0
+  test_censor_exit_code_for_single_folder fixtures/fail 9
 
   if [[ $failed == 0 ]]; then
     echo "ALL PASS (total of $passed tests)"
