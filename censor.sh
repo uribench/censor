@@ -9,7 +9,10 @@ usage() {
   printf "  %s -v|--version|version\n" "$CMD_NAME"
   printf "    Show version number\n\n"
   printf "  %s BLACKLIST [FILE]...\n" "$CMD_NAME"
-  printf "    Example: %s blacklist.txt .\n" "$CMD_NAME"
+  printf "    Example: %s blacklist.txt .\n\n" "$CMD_NAME"
+  printf "With no option or no BLACKLIST, assume -h.\n"
+  printf "With no FILE, scan '.'.\n"
+  printf "Exit status is 9 if any blacklisted word is found, 0 otherwise.\n"
 }
 
 use_encrypted_blacklist() {
@@ -43,8 +46,7 @@ censor() {
                   # later it will be used in 'grep' using array expansion syntax
 
   if [[ -z ${folders[*]} ]]; then
-    usage
-    exit 1
+    folders="."
   fi
 
   if [[ $blacklist == *.gpg ]]; then
