@@ -9,7 +9,10 @@ usage() {
   printf "  %s -v|--version|version\n" "$CMD_NAME"
   printf "    Show version number\n\n"
   printf "  %s BLACKLIST [FILE]...\n" "$CMD_NAME"
-  printf "    Example: %s blacklist.txt .\n" "$CMD_NAME"
+  printf "    Example: %s blacklist.txt .\n\n" "$CMD_NAME"
+  printf "With no option or no BLACKLIST, assume -h.\n"
+  printf "With no FILE, scan '.'.\n"
+  printf "Exit status is 9 if any blacklisted word is found, 0 otherwise.\n"
 }
 
 use_encrypted_blacklist() {
@@ -36,24 +39,6 @@ check_blacklisted_words() {
   fi
 }
 
-censor() {
-  blacklist=$1
-  shift
-  folders=("$@")  # parentheses are needed to store the positional parameters in an array.
-                  # later it will be used in 'grep' using array expansion syntax
-
-  if [[ -z ${folders[*]} ]]; then
-    usage
-    exit 1
-  fi
-
-  if [[ $blacklist == *.gpg ]]; then
-    use_encrypted_blacklist
-  fi
-
-  check_blacklisted_words
-}
-
 run() {
   NO_ARGS=0
   if [ $# -eq "$NO_ARGS" ]; then
@@ -64,12 +49,22 @@ run() {
   case "$1" in
     -h | --help    | help    ) usage; exit 0 ;;
     -v | --version | version ) echo "$VERSION"; exit 0 ;;
-    * ) censor "$@" ;;
-  esac  
+  esac
+
+  blacklist=$1
+  shift
+  folders=("$@")  # parentheses are needed to store the positional parameters in an array.
+                  # later it will be used in 'grep' using array expansion syntax
+
+  if [[ $blacklist == *.gpg ]]; then
+    use_encrypted_blacklist
+  fi
+
+  check_blacklisted_words
 }
 
 initialize() {
-  VERSION="0.2.0"
+  VERSION="0.2.1"
   set -u          # '-e' option is not used since 'grep' returns 1 when nothing is found
 }
 

@@ -16,6 +16,12 @@ $ ./censor.sh blacklist.txt.gpg .
 
 The `BLACKLIST` parameter of `censor.sh` script can be provided as a plain text file or as an encrypted file. When an encrypted blacklist file is used, it has to be created with `gpg2` using a symmetric cipher. The encryption/decryption passphrase is expected to be in `BLACKLIST_PASSWORD` environment variable.
 
+To learn about more usage options see the online help:
+
+```bash
+$ ./censor.sh -h
+```
+
 ## Maintaining the Blacklist File
 
 Changes to the blacklist file are done on its plain text version. The `censor.sh` script is making use of the `grep` command, therefore, each blacklisted word has to be placed in a separate line (i.e., `grep` takes the whole line for pattern match). 
