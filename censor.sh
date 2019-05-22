@@ -28,10 +28,7 @@ on_exit() {
 }
 
 check_blacklisted_words() {
-  grep -Rinw --color -f $blacklist "${folders[@]}" 
-
-# shellcheck disable=SC2181
-  if [[ $? == 0 ]]; then
+  if grep -Rinw --color -f $blacklist "${folders[@]}" ; then
     echo "FAIL: There are some blacklisted words in the repository"
     exit 9
   else
@@ -66,7 +63,7 @@ run() {
 
 initialize() {
   VERSION="0.2.1"
-  set -u          # '-e' option is not used since 'grep' returns 1 when nothing is found
+  set -eu
 }
 
 main() {
