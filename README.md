@@ -38,6 +38,10 @@ $ gpg2 --batch --passphrase=$BLACKLIST_PASSWORD -d blacklist.txt.gpg > blacklist
 
 Note: If you decide to use the encrypted blacklist and would like to avoid uploading its plain text version to a public repository, then remember to add its name to the `.gitignore` file. For example, the line `*blacklist.txt` ignores all plain text blacklists with filenames ending with "\*blacklist.txt", such as "test-balcklist.txt.
 
+## Static Analysis
+
+Static Analysis is done using [ShellCheck][1]. It is done locally and is also part of the CI (performed by Travis-CI that already it pre-installed).
+
 ## Testing
 
 The `censor.sh` script is tested using multiple 'pass/fail' fixtures placed in their respective folders under `./test/`.
@@ -57,3 +61,7 @@ PASS: fixtures/fail/fail-email_address.md
 PASS: fixtures/fail/fail-mixed_case.md
 ALL PASS (total of 6 tests)
 ```
+
+---
+
+[1]: https://github.com/koalaman/shellcheck
