@@ -4,5 +4,6 @@ language: bash
 before_script:
 - sudo apt-get install gnupg2
 script:
+- shellcheck censor.sh
 - cd test
 - ./test.sh
