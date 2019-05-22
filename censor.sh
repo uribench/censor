@@ -30,6 +30,7 @@ on_exit() {
 check_blacklisted_words() {
   grep -Rinw --color -f $blacklist "${folders[@]}" 
 
+# shellcheck disable=SC2181
   if [[ $? == 0 ]]; then
     echo "FAIL: There are some blacklisted words in the repository"
     exit 9
