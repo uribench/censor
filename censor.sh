@@ -64,7 +64,7 @@ run() {
 }
 
 initialize() {
-  VERSION="0.2.0"
+  VERSION="0.2.1"
   set -u          # '-e' option is not used since 'grep' returns 1 when nothing is found
 }
 
