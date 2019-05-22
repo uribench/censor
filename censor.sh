@@ -39,19 +39,6 @@ check_blacklisted_words() {
   fi
 }
 
-censor() {
-  blacklist=$1
-  shift
-  folders=("$@")  # parentheses are needed to store the positional parameters in an array.
-                  # later it will be used in 'grep' using array expansion syntax
-
-  if [[ $blacklist == *.gpg ]]; then
-    use_encrypted_blacklist
-  fi
-
-  check_blacklisted_words
-}
-
 run() {
   NO_ARGS=0
   if [ $# -eq "$NO_ARGS" ]; then
@@ -62,8 +49,18 @@ run() {
   case "$1" in
     -h | --help    | help    ) usage; exit 0 ;;
     -v | --version | version ) echo "$VERSION"; exit 0 ;;
-    * ) censor "$@" ;;
-  esac  
+  esac
+
+  blacklist=$1
+  shift
+  folders=("$@")  # parentheses are needed to store the positional parameters in an array.
+                  # later it will be used in 'grep' using array expansion syntax
+
+  if [[ $blacklist == *.gpg ]]; then
+    use_encrypted_blacklist
+  fi
+
+  check_blacklisted_words
 }
 
 initialize() {
