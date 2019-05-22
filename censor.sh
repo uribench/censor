@@ -3,22 +3,23 @@ set -u            # '-e' option is not used since 'grep' returns 1 when nothing 
 
 blacklist=$1
 shift
-folders=("$@")    # parentheses are needed to store the positional parameters in an array
+folders=("$@")    # parentheses are needed to store the positional parameters in an array.
+                  # later it will be used in 'grep' using array expansion syntax
 
-if [[ $blacklist == *.gpg ]]; then
-  tempblacklist=/tmp/blacklist.txt
-  gpg2 --batch --passphrase=$BLACKLIST_PASSWORD -d $blacklist > $tempblacklist
-  blacklist=$tempblacklist
-  trap "rm -f $tempblacklist" EXIT
-fi
-
-if [[ -z $folders ]]; then
+if [[ -z ${folders[*]} ]]; then
   echo "Usage: $0 BLACKLIST [FILE]..."
   echo "Example: $0 blacklist.txt ."
   exit 1
 fi
 
-grep -Rinw --color -f $blacklist "${folders[@]}"  # array expansion syntax
+if [[ $blacklist == *.gpg ]]; then
+  tempblacklist=/tmp/blacklist.txt
+  gpg2 --batch --passphrase="$BLACKLIST_PASSWORD" -d "$blacklist" > $tempblacklist
+  blacklist=$tempblacklist
+  trap 'rm -f $tempblacklist' EXIT
+fi
+
+grep -Rinw --color -f $blacklist "${folders[@]}" 
 
 if [[ $? == 0 ]]; then
   echo "FAIL: There are some blacklisted words in the repository"
