@@ -45,10 +45,6 @@ censor() {
   folders=("$@")  # parentheses are needed to store the positional parameters in an array.
                   # later it will be used in 'grep' using array expansion syntax
 
-  if [[ -z ${folders[*]} ]]; then
-    folders="."
-  fi
-
   if [[ $blacklist == *.gpg ]]; then
     use_encrypted_blacklist
   fi
