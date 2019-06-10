@@ -14,7 +14,7 @@ $ ./censor.sh blacklist.txt .
 $ ./censor.sh blacklist.txt.gpg .
 ```
 
-The `BLACKLIST` parameter of `censor.sh` script can be provided as a plain text file or as an encrypted file. When an encrypted blacklist file is used, it has to be created with `gpg2` using a symmetric cipher. The encryption/decryption passphrase is expected to be in `BLACKLIST_PASSWORD` environment variable.
+The `BLACKLIST` parameter of `censor.sh` script can be provided as a plain text file or as an encrypted file. When an encrypted blacklist file is used, it has to be created with `gpg2` using a symmetric cipher. The encryption/decryption passphrase is expected to be in `BLACKLIST_PASSWORD` environment variable. For additional details on the encrypted blacklist file and encryption/decryption passphrase see [this][1] section below.
 
 To learn about more usage options see the online help:
 
@@ -36,11 +36,17 @@ $ gpg2 --batch --passphrase=$BLACKLIST_PASSWORD -c blacklist.txt
 $ gpg2 --batch --passphrase=$BLACKLIST_PASSWORD -d blacklist.txt.gpg > blacklist.txt
 ```
 
-Note: If you decide to use the encrypted blacklist and would like to avoid uploading its plain text version to a public repository, then remember to add its name to the `.gitignore` file. For example, the line `*blacklist.txt` ignores all plain text blacklists with filenames ending with "\*blacklist.txt", such as "test-balcklist.txt.
+### Notes on Encrypted Blacklist File and Encryption/Decryption Passphrase
+
+If you decide to use the encrypted blacklist and would like to avoid uploading its plain text version to a public repository, then remember to add its name to the local `.gitignore` file. For example, the line `*blacklist.txt` ignores all plain text blacklists with filenames ending with "\*blacklist.txt", such as "test-balcklist.txt.
+
+When the local encryption/decryption passphrase in `BLACKLIST_PASSWORD` environment variable is defined in a local configuration file, then remember to add it to the git ignore list. For instance, when using an environment switcher for the shell, such as [direnv][2], then the passphrase will typically be defined in the local `.envrc` and ignored globally in `~/.gitignore_global`.
+
+Typically, CI servers provide a way to define environment variables. This is used here to store secretly the encryption/decryption passphrase on Travis-CI.
 
 ## Static Analysis
 
-Static Analysis is done using [ShellCheck][1]. It is done locally and is also part of the CI (performed by Travis-CI that already it pre-installed).
+Static Analysis is done using [ShellCheck][3]. It is done locally and is also part of the CI (performed by Travis-CI that already it pre-installed).
 
 ## Testing
 
@@ -64,4 +70,6 @@ ALL PASS (total of 6 tests)
 
 ---
 
-[1]: https://github.com/koalaman/shellcheck
+[1]: #notes-on-encrypted-blacklist-file-and-encryptiondecryption-passphrase
+[2]: https://direnv.net/
+[3]: https://github.com/koalaman/shellcheck
