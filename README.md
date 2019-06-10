@@ -42,11 +42,11 @@ If you decide to use the encrypted blacklist and would like to avoid uploading i
 
 When the local encryption/decryption passphrase in `BLACKLIST_PASSWORD` environment variable is defined in a local configuration file, then remember to add it to the git ignore list. For instance, when using an environment switcher for the shell, such as [direnv][2], then the passphrase will typically be defined in the local `.envrc` and ignored globally in `~/.gitignore_global`.
 
-Typically, CI servers provide a way to define environment variables. This is used here to store secretly the encryption/decryption passphrase on Travis-CI.
+Typically, CI servers provide a way to define environment variables. This is used here to secretly store the encryption/decryption passphrase on Travis-CI. Note however that according to [Travis-CI guidelines][3] and [Travis-CI Issues][4]: "Encrypted variables are not available to untrusted builds such as pull requests coming from another repository".
 
 ## Static Analysis
 
-Static Analysis is done using [ShellCheck][3]. It is done locally and is also part of the CI (performed by Travis-CI that already it pre-installed).
+Static Analysis is done using [ShellCheck][5]. It is done locally and is also part of the CI (performed by Travis-CI that already it pre-installed).
 
 ## Testing
 
@@ -72,4 +72,6 @@ ALL PASS (total of 6 tests)
 
 [1]: #notes-on-encrypted-blacklist-file-and-encryptiondecryption-passphrase
 [2]: https://direnv.net/
-[3]: https://github.com/koalaman/shellcheck
+[3]: https://docs.travis-ci.com/user/environment-variables/#defining-encrypted-variables-in-travisyml
+[4]: https://github.com/travis-ci/travis-ci/issues/1938
+[5]: https://github.com/koalaman/shellcheck
