@@ -38,7 +38,7 @@ $ gpg2 --batch --passphrase=$BLACKLIST_PASSWORD -d blacklist.txt.gpg > blacklist
 
 ### Notes on Encrypted Blacklist File and Encryption/Decryption Passphrase
 
-If you decide to use the encrypted blacklist and would like to avoid uploading its plain text version to a public repository, then remember to add its name to the local `.gitignore` file. For example, the line `*blacklist.txt` ignores all plain text blacklists with filenames ending with "\*blacklist.txt", such as "test-balcklist.txt.
+If you decide to use the encrypted blacklist and would like to avoid uploading its plain text version to a public repository, then remember to add its name to the local `.gitignore` file. For example, the line `*blacklist.txt` ignores all plain text blacklists with filenames ending with "\*blacklist.txt", such as "test-blacklist.txt.
 
 When the local encryption/decryption passphrase in `BLACKLIST_PASSWORD` environment variable is defined in a local configuration file, then remember to add it to the git ignore list. For instance, when using an environment switcher for the shell, such as [direnv][2], then the passphrase will typically be defined in the local `.envrc` and ignored globally in `~/.gitignore_global`.
 
